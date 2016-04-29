@@ -2,7 +2,7 @@
 A PHP library for the Vonigo API
 
 
-# Requirments
+# Requirements
 
 Vonigo PHP requires the cURL php library.
 

@@ -1,6 +1,7 @@
 # vonigo-php
 A PHP library for the Vonigo API
 
+by Caleb Tucker-Raymond http://calebtr.com
 
 # Requirements
 

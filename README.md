@@ -9,10 +9,24 @@ Vonigo PHP requires the cURL php library.
 
 # Usage
 
-    $settings = array($username, $password, $company, $url);
+    <?php
+
+    require_once('Vonigo.php');
+    require_once('VonigoInterface.php');
+    require_once('VonigoSimple.php');
+
+    $settings = array(
+        'username' => 'username',
+        'password' => 'password',
+        'company' => 'company',
+        'base_url' => 'https://url', // no trailing slash
+    );
+
     $co = new VonigoSimple($settings);
-    $result = $co->frachises();
+    $result = $co->franchises();
     print_r($result);
+
+    ?>
 
 
 # VonigoSimple

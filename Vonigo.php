@@ -77,7 +77,7 @@ class vonigo {
       }
     }
   
-    if (!empty($decoded->errNo)) {
+    if (empty($decoded->errNo)) {
       $decoded->errNo = 0;
     }
       

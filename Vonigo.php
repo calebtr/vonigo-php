@@ -45,7 +45,7 @@ class vonigo {
     }
   }
 
-  private function request($method, $params = array()) {
+  private function request($method, $params = array(), $retry = true) {
     $url = $this->base_url . '/' . $method . '/';
 
     // remove double slash at end
@@ -69,13 +69,34 @@ class vonigo {
       $return->rawbody = $return->body;
     }
     $decoded = json_decode($return->body);
+
     if (is_null($decoded)) {
       $decoded = (object) array('errNo' => -400, 'errMsg' => 'invalid JSON response from server', 'body' => $return->body);
       if ($this->debug & VONIGO_DEBUG) {
         $this->showDebug('invalid response: ' . print_r($return->body, true));
       }
     }
+  
+    if (!empty($decoded->errNo)) {
+      $decoded->errNo = 0;
+    }
       
+    if (!empty($decoded->errNo) && $decoded->errNo == -421) {
+      $this->setSecurityToken(null);
+      $auth = $this->authenticate();
+      if ($auth && $retry) {
+        $this->request($method, $params, false);
+      }
+    }
+
+    // if there is one validation error and it is -5213, pretend there are no errors
+    // -5213 -> "Same franchise ID supplied."
+    if ($decoded->errNo == -600) {
+      if (count($decoded->Errors) == 1 && $decoded->Errors[0]->errNo == -5213) {
+        $decoded->errNo = 0;
+      }
+    }
+
     if ($decoded->errNo == -421) {
       $this->setSecurityToken(null);
     }

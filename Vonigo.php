@@ -92,7 +92,7 @@ class vonigo {
     // if there is one validation error and it is -5213, pretend there are no errors
     // -5213 -> "Same franchise ID supplied."
     if ($decoded->errNo == -600) {
-      if (count($decoded->errors) == 1 && $decoded->errors[0]->errNo == -5213) {
+      if (!empty($decoded->Errors) && count($decoded->Errors) == 1 && $decoded->Errors[0]->errNo == -5213) {
         $decoded->errNo = 0;
       }
     }

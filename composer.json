@@ -1,0 +1,13 @@
+{
+    "name": "calebtr/vonigo-php",
+    "description": "A PHP library for the Vonigo API",
+    "type": "library",
+    "license": "mit",
+    "authors": [
+        {
+            "name": "Caleb Tucker-Raymond",
+            "email": "calebtr@gmail.com"
+        }
+    ],
+    "require": {}
+}

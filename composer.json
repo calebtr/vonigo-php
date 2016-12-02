@@ -1,7 +1,9 @@
 {
     "name": "calebtr/vonigo-php",
     "description": "A PHP library for the Vonigo API",
-    "type": "library",
+    "autoload": {
+        "VonigoPHP": ""
+    },
     "license": "mit",
     "authors": [
         {

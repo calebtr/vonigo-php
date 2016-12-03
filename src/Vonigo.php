@@ -15,7 +15,7 @@ define('VONIGO_DEBUG_ALL', 7);
 define('VONIGO_METHOD_DELETE', 4);
 
 
-class vonigo {
+class Vonigo {
   private $debug = false;
   private $company = '';
   private $username = '';

@@ -2,7 +2,7 @@
 
 namespace VonigoPHP;
 
-class VonigoSimple extends vonigo implements VonigoInterface {
+class VonigoSimple extends Vonigo implements VonigoInterface {
 
     /**
      * @param $objectID = objectID of a record to be deactivated

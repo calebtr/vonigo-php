@@ -1,6 +1,6 @@
 <?php
 
-namespace Vonigo;
+namespace VonigoPHP;
 
 class VonigoSimple extends vonigo implements VonigoInterface {
 

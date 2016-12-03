@@ -1,6 +1,6 @@
 <?php
 
-namespace Vonigo;
+namespace VonigoPHP;
 
 define('VONIGO_DATEMODE_CREATED', 1);
 define('VONIGO_DATEMODE_EDITED', 2);

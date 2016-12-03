@@ -3,10 +3,10 @@
     "description": "A PHP library for the Vonigo API",
     "autoload": {
         "psr-4": {
-            "Vonigo\\": "src/"
+            "VonigoPHP\\": "src/"
         }
     },
-    "license": "mit",
+    "license": "MIT",
     "authors": [
         {
             "name": "Caleb Tucker-Raymond",

@@ -1,5 +1,7 @@
 <?php
 
+namespace Vonigo;
+
 class VonigoSimple extends vonigo implements VonigoInterface {
 
     /**

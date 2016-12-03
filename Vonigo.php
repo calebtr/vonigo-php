@@ -1,5 +1,7 @@
 <?php
 
+namespace Vonigo;
+
 define('VONIGO_DATEMODE_CREATED', 1);
 define('VONIGO_DATEMODE_EDITED', 2);
 define('VONIGO_DATEMODE_SCHEDULED', 3);

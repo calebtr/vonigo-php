@@ -1,5 +1,7 @@
 <?php
 
+namespace Vonigo;
+
 interface VonigoInterface {
 
     /**

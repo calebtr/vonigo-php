@@ -1,11 +1,6 @@
 {
     "name": "calebtr/vonigo-php",
     "description": "A PHP library for the Vonigo API",
-    "autoload": {
-        "psr-4": {
-            "VonigoPHP\\": "src/"
-        }
-    },
     "license": "MIT",
     "authors": [
         {
@@ -13,5 +8,9 @@
             "email": "calebtr@gmail.com"
         }
     ],
-    "require": {}
+    "autoload": {
+        "psr-4": {
+            "VonigoPHP\\": "src/"
+        }
+    }
 }

@@ -64,7 +64,7 @@ class Vonigo {
     }
     curl_setopt($this->ch, CURLOPT_URL, $url);
     curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, 1);
-    $return = new stdClass();
+    $return = new \stdClass();
     $return->body = curl_exec($this->ch);
     $return->info = curl_getinfo($this->ch);
     if ($this->debug & VONIGO_DEBUG) {

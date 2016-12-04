@@ -7,27 +7,17 @@ by Caleb Tucker-Raymond http://calebtr.com
 
 Vonigo PHP requires the cURL php library.
 
+# Install with composer
 
-# Usage
+    {
+        "require": {
+            "calebtr/vonigo-php": "dev-master"
+        }
+    }
 
-    <?php
+# Examples
 
-    require_once('Vonigo.php');
-    require_once('VonigoInterface.php');
-    require_once('VonigoSimple.php');
-
-    $settings = array(
-        'username' => 'username',
-        'password' => 'password',
-        'company' => 'company',
-        'base_url' => 'https://url', // no trailing slash
-    );
-
-    $co = new VonigoSimple($settings);
-    $result = $co->franchises();
-    print_r($result);
-
-    ?>
+Examples are included in the [Examples]('examples/') directory.
 
 
 # VonigoSimple

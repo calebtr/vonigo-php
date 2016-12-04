@@ -17,7 +17,7 @@ Vonigo PHP requires the cURL php library.
 
 # Examples
 
-Examples are included in the [Examples]('examples/') directory.
+Examples are included in the examples directory.
 
 
 # VonigoSimple

@@ -215,9 +215,11 @@ abstract class VonigoRecord {
 	public function getOption($fieldID, $optionID) {
 		$object = $this->co->objects($this->objectTypeID);
 
-		foreach ($object->Options as $option) {
-			if ($option->fieldID = $fieldID && $option->optionID == $optionID) {
-				return $option->name;
+                if (!empty($object->Options)) {
+    			foreach ($object->Options as $option) {
+				if ($option->fieldID = $fieldID && $option->optionID == $optionID) {
+					return $option->name;
+				}
 			}
 		}
 	}

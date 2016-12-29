@@ -239,7 +239,7 @@ abstract class VonigoRecord {
 	 * Helper function maps some fields.
 	 */
 	protected function mapFields() {
-		$fields = new stdClass;
+		$fields = new \stdClass;
 		foreach ($this->map as $v => $i) {
 			if (!empty($this->fields->{$v}->fieldValue)) {
 				$fields->{$i} = $this->fields->{$v}->fieldValue;
@@ -250,7 +250,7 @@ abstract class VonigoRecord {
 
 	public function mapVonigoFields($object) {
 		$reverseMap = $this->reverseMap();
-		$return = new stdClass;
+		$return = new \stdClass;
 		if (!empty($object->Fields)) {
 			foreach ( $object->Fields as $field ) {
 				$fieldKey = 'field' . $field->fieldID;
@@ -267,7 +267,7 @@ abstract class VonigoRecord {
 		$vonigoFields = array();
 
 		foreach ($this->map as $field => $info) {
-			$fieldObj = new stdClass;
+			$fieldObj = new \stdClass;
 			$fieldObj->fieldID = $this->map[$field]['fieldID'];
 			if (!empty($this->map[$field]['optionID'])) {
 				$fieldObj->optionID = $this->map[$field]['optionID'];

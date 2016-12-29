@@ -309,13 +309,13 @@ abstract class VonigoRecord {
 			$session = $this->co->session($this->franchiseID);
 		}
 		else {
-			throw new Exception('No franchise set: ' . PHP_EOL . print_r($this, true));
+			throw new \Exception('No franchise set: ' . PHP_EOL . print_r($this, true));
 		}
 		if ($session->errNo == 0) {
 			return $session;
 		}
 		else {
-			throw new Exception('Could not set franchise (' . $this->franchiseID . '):' . PHP_EOL . print_r($session, true));
+			throw new \Exception('Could not set franchise (' . $this->franchiseID . '):' . PHP_EOL . print_r($session, true));
 		}
 	}
 

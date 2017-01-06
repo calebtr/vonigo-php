@@ -266,6 +266,17 @@ class Vonigo {
     return $this->data('emails', $params, $fields);
   }
 
+    /**
+     * Creates, reads, updates or deletes leads records.
+     *
+     * @param array $params
+     * @param null $fields
+     * @return bool|mixed|\stdClass
+     */
+    public function leads($params = array(), $fields = null) {
+      return $this->data('leads', $params, $fields);
+    }
+
   public function workorders($params = array(), $fields = null) {
     if (isset($params['objectID']) &! isset($params['method'])) {
       $params['method'] = 1;

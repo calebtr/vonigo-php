@@ -214,7 +214,7 @@ class Vonigo {
     curl_close($this->ch);
   }
 
-  private function data($method, $params = array(), $fields = NULL) {
+  protected function data($method, $params = array(), $fields = NULL) {
     $action = 'get';
     if (($method == 'charges' && $params['method'] == 2) || ($method == 'payments' && $params['method'] == 3)){
       $action = 'post';
@@ -314,7 +314,7 @@ class Vonigo {
     return json_decode($this->get('security/' . $method . '/', $params)->body);
   }
 
-  private function resources($method, $params = array()) {
+  protected function resources($method, $params = array()) {
     $auth = $this->authenticate();
     if (!$auth) {
       $this->setSecurityToken(null);
@@ -419,7 +419,7 @@ class Vonigo {
     return $this->resources('serviceTypes');
   }
 
-  private function system($method, $params = array()) {
+  protected function system($method, $params = array()) {
     $auth = $this->authenticate();
     if (!$auth) {
       $this->setSecurityToken(null);

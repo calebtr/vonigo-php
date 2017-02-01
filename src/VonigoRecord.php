@@ -317,7 +317,8 @@ abstract class VonigoRecord {
 			return $session;
 		}
 		else {
-			throw new \Exception('Could not set franchise (' . $this->franchiseID . '):' . PHP_EOL . print_r($session, true));
+			throw new \Exception('Could not set franchise (' . $this->franchiseID . '):' . PHP_EOL . 
+print_r($session, true));
 		}
 	}
 
@@ -385,6 +386,10 @@ abstract class VonigoRecord {
 	 */
 	protected function validateOption($objectID, $fieldID, $value) {
 		$object = $this->co->objects($objectID);
+
+                if (empty($object->Options)) {
+                    return (object) array('error' => 'could not look up option in vonigo object: ' . print_r($object, true));
+                }
 
 		foreach ($object->Options as $option) {
 			if ($option->fieldID = $fieldID && $option->name == $value) {

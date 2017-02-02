@@ -40,14 +40,14 @@ class Vonigo {
     $this->securityToken = $token;
   }
 
-  private function set_curl_handle() {
+  protected function set_curl_handle() {
     if (!$this->ch) {
       $this->ch = curl_init();
       curl_setopt($this->ch, CURLOPT_USERAGENT, $this->userAgent);
     }
   }
 
-  private function request($method, $params = array(), $retry = true) {
+  protected function request($method, $params = array(), $retry = true) {
     $url = $this->base_url . '/' . $method . '/';
 
     // remove double slash at end
@@ -125,7 +125,7 @@ class Vonigo {
     return $return;
   }
 
-  private function set_post_options($params) {
+  protected function set_post_options($params) {
     $auth = $this->authenticate();
     if ($auth === TRUE) {
       $params['securityToken'] = $this->getSecurityToken();
@@ -147,7 +147,7 @@ class Vonigo {
     }
   }
 
-  private function get($method, $params = array()) {
+  protected function get($method, $params = array()) {
     $this->set_curl_handle();
     $auth = $this->authenticate();
     if ($auth === TRUE) {
@@ -196,7 +196,7 @@ class Vonigo {
     return TRUE;
   }
 
-  private function post($method, $params = array()) {
+  protected function post($method, $params = array()) {
     $this->set_curl_handle();
     $auth = $this->authenticate();
     if ($auth === true) {

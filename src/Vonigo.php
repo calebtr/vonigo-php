@@ -238,7 +238,10 @@ class Vonigo {
       $params['Fields'] = $fields;
       $action = 'post';
     }
-    return json_decode($this->{$action}('data/' . $method, $params)->body);
+    $result = $this->{$action}('data/' . $method, $params);
+    if (!empty($result->body)) {
+        return json_decode($result->body);
+    }
   }
 
   public function clients($params = array(), $fields = array()) {
@@ -322,7 +325,10 @@ class Vonigo {
     }
     
     $params['securityToken'] = $this->getSecurityToken();
-    return json_decode($this->get('security/' . $method . '/', $params)->body);
+    $result = $this->get('security/' . $method . '/', $params);
+    if (!empty($result->body)) {
+        return json_decode($result->body);
+    }
   }
 
   protected function resources($method, $params = array()) {
@@ -445,7 +451,10 @@ class Vonigo {
         'securityToken' => $this->getSecurityToken(),
       );
     }
-    return json_decode($this->get('system/' . $method . '/', $params)->body);
+    $result = $this->get('system/' . $method . '/', $params);
+    if (!empty($result->body)) {
+        return json_decode($result->body);
+    }
   }
 
   public function modules() {

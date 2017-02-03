@@ -525,7 +525,7 @@ class Vonigo {
     return $this->data('locations', $params, $fields);
   }
   
-  private function showDebug($info) {
+  protected function showDebug($info) {
     if ($this->debug & VONIGO_DEBUG_SCREEN) {
       echo '<pre>' . $info . '</pre>';
     }

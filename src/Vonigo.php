@@ -16,14 +16,14 @@ define('VONIGO_METHOD_DELETE', 4);
 
 
 class Vonigo {
-  private $debug = false;
+  protected $debug = false;
   private $company = '';
   private $username = '';
   private $password = '';
   public $base_url = '';
   private $ch = NULL;
   private $securityToken = '';
-  private $userAgent = 'Vonigo API library for PHP';
+  protected $userAgent = 'Vonigo API library for PHP';
 
   public function __construct($settings) {
     $this->username = $settings['username'];

@@ -70,7 +70,7 @@ class Vonigo {
     /**
      * @var int - debug setting
      */
-    private $debug = 0;
+    protected $debug = 0;
 
     /**
      * @var string - Vonigo password
@@ -85,7 +85,7 @@ class Vonigo {
     /**
      * @var string - string sent as user agent header in http requests
      */
-    private $userAgent = 'Vonigo API library for PHP';
+    protected $userAgent = 'Vonigo API library for PHP';
 
     /**
      * @var string Vonigo username.
@@ -366,7 +366,10 @@ class Vonigo {
             $params['Fields'] = $fields;
             $action = 'post';
         }
-        return json_decode($this->{$action}('data/' . $method, $params)->body);
+        $result = $this->{$action}('data/' . $method, $params);
+        if (!empty($result->body)) {
+            return json_decode($result->body);
+        }
     }
 
     /**
@@ -557,7 +560,10 @@ class Vonigo {
         }
 
         $params['securityToken'] = $this->getSecurityToken();
-        return json_decode($this->get('security/' . $method . '/', $params)->body);
+        $result = $this->get('security/' . $method . '/', $params);
+        if (!empty($result->body)) {
+            return json_decode($result->body);
+        }
     }
 
     /**
@@ -583,7 +589,10 @@ class Vonigo {
                 unset($params[$key]);
             }
         }
-        return json_decode($this->get('resources/' . $method . '/', $params)->body);
+        $result = $this->get('resources/' . $method . '/', $params);
+        if (!empty($result->body)) {
+            return json_decode($result->body);
+        }
     }
 
     /**
@@ -766,7 +775,10 @@ class Vonigo {
                 'securityToken' => $this->getSecurityToken(),
             );
         }
-        return json_decode($this->get('system/' . $method . '/', $params)->body);
+        $result = $this->get('system/' . $method . '/', $params);
+        if (!empty($result->body)) {
+            return json_decode($result->body);
+        }
     }
 
     /**

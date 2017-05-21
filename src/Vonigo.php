@@ -825,11 +825,11 @@ class Vonigo {
      * @param array $params
      * @return bool|mixed|\stdClass
      */
-    public function objects($objectID = NULL, $params = array()) {
-        if (isset($objectID)) {
-            $params['method'] = 2;
-            $params['objectID'] = $objectID;
+    public function objects($objectID, $params = array()) {
+        if (empty($params)) {
+            $params['method'] = 1;
         }
+        $params['objectID'] = $objectID;
         return $this->system('objects', $params);
     }
 

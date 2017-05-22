@@ -825,8 +825,8 @@ class Vonigo {
      * @param array $params
      * @return bool|mixed|\stdClass
      */
-    public function objects($objectID, $params = array()) {
-        if (empty($params)) {
+    public function objects($objectID = null, $params = array()) {
+        if (empty($params) && !empty($objectID)) {
             $params['method'] = 2;
         }
         $params['objectID'] = $objectID;

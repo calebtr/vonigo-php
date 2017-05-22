@@ -827,7 +827,7 @@ class Vonigo {
      */
     public function objects($objectID, $params = array()) {
         if (empty($params)) {
-            $params['method'] = 1;
+            $params['method'] = 2;
         }
         $params['objectID'] = $objectID;
         return $this->system('objects', $params);

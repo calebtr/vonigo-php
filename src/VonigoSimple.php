@@ -39,13 +39,6 @@ class VonigoSimple extends Vonigo implements VonigoInterface {
     }
 
     /**
-     * @param $objectID = objectID of a contact2 record
-     **/
-    public function activateContact2($objectID) {
-        return $this->activateRecord($objectID, 'contacts2');
-    }
-
-    /**
      * @param $objectID = objectID of a record to be deactivated
      * @param method = method to call to deactivate a record
      */
@@ -55,13 +48,6 @@ class VonigoSimple extends Vonigo implements VonigoInterface {
             'objectID' => $objectID,
         );
         return call_user_func(array($this, $method), $params);
-    }
-
-    /**
-     * @param $objectID = objectID of a contact2 record
-     **/
-    public function deactivateContact2($objectID) {
-        return $this->deactivateRecord($objectID, 'contacts2');
     }
 
     /**
@@ -99,14 +85,6 @@ class VonigoSimple extends Vonigo implements VonigoInterface {
      */
     public function getContact($contactID) {
         return $this->getRecordbyID('contacts', $contactID);
-    }
-
-    /**
-     * @param $contactID
-     * @return mixed
-     */
-    public function getContact2($contactID) {
-        return $this->getRecordbyID('contacts2', $contactID);
     }
 
     /**

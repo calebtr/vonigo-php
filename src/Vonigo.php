@@ -402,23 +402,9 @@ class Vonigo {
     }
 
     /**
-     * Creates, reads, updates or deletes contacts2 records.
-     **
-     * @param array $params
-     * @param null $fields
-     * @return bool|mixed|\stdClass
-     */
-    public function contacts2($params = array(), $fields = null) {
-        if (!isset($params['method'])) {
-            $params = array('method' => 1);
-        }
-        return $this->data('contacts2', $params, $fields);
-    }
-
-    /**
      * Creates, reads, updates or deletes asset records.
      *
-     * Can be an alias for contacts2 method.
+     * Replaces the contacts2 method.
      *
      * @param array $params
      * @param null $fields

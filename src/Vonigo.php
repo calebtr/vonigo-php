@@ -524,7 +524,10 @@ class Vonigo {
      * @param null $fields
      * @return bool|mixed|\stdClass
      */
-    public function payments($params, $fields) {
+    public function payments($params=array(), $fields=array()) {
+        if (empty($params['method'])) {
+          $params['method'] = 0;
+        }
         return $this->data('payments', $params, $fields);
     }
 

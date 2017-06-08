@@ -744,6 +744,13 @@ class Vonigo {
     }
 
     /**
+     * Lists servicable postal codes.
+     */
+    public function zips($params = array()) {
+        return $this->resources('zips', $params);
+    }
+
+    /**
      * Helper function for methods using the 'system' endpoint.
      *
      * @param $method

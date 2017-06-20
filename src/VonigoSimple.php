@@ -17,7 +17,7 @@ class VonigoSimple extends Vonigo implements VonigoInterface {
     }
 
     /**
-     * @param $objectID = objectID of a contact2 record
+     * @param $objectID = objectID of a client record
      **/
     public function activateClient($objectID) {
         return $this->activateRecord($objectID, 'clients');

@@ -9,12 +9,6 @@ interface VonigoInterface {
      **/
     public function activateClient($objectID);
 
-    /**
-     * @param $objectID
-     * @return mixed
-     */
-    public function activateContact2($objectID);
-
     public function createClient($fields);
 
     /**
@@ -22,12 +16,6 @@ interface VonigoInterface {
      * @return mixed
      */
     public function deactivateClient($objectID);
-
-    /**
-     * @param $objectID
-     * @return mixed
-     */
-    public function deactivateContact2($objectID);
 
     /**
      * @param $workorderID
@@ -52,12 +40,6 @@ interface VonigoInterface {
      * @return mixed
      */
     public function getContact($contactID);
-
-    /**
-     * @param $contactID
-     * @return mixed
-     */
-    public function getContact2($contactID);
 
     /**
      * @param $locationID

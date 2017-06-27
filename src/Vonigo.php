@@ -986,10 +986,10 @@ class Vonigo {
      *  TODO: move to a helper class
      */
     public static function isTrue($value) {
-        if (strtolower($value) === 'True' || $value == 1)  {
+        if (strtolower($value) === 'true' || $value == 1)  {
             return true;
         }
-        if (strtolower($value) === 'False' || $value == 0) {
+        if (strtolower($value) === 'false' || $value == 0) {
             return false;
         }
     }

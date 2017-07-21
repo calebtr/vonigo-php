@@ -377,7 +377,7 @@ class Vonigo {
      * Creates, reads, updates or deletes clients records.
      *
      * @param array $params
-     * @param null $fields
+     * @param array $fields
      * @return bool|mixed|\stdClass
      */
     public function clients($params = array(), $fields = array()) {
@@ -391,10 +391,10 @@ class Vonigo {
      * Creates, reads, updates or deletes contacts records.
      *
      * @param array $params
-     * @param null $fields
+     * @param array $fields
      * @return bool|mixed|\stdClass
      */
-    public function contacts($params = array(), $fields = null) {
+    public function contacts($params = array(), $fields = array()) {
         if (!isset($params['method'])) {
             $params = array('method' => 1);
         }
@@ -407,10 +407,10 @@ class Vonigo {
      * Replaces the contacts2 method.
      *
      * @param array $params
-     * @param null $fields
+     * @param array $fields
      * @return bool|mixed|\stdClass
      */
-    public function assets($params = array(), $fields = null) {
+    public function assets($params = array(), $fields = array()) {
         if (!isset($params['method'])) {
             $params = array('method' => 0);
         }
@@ -421,10 +421,10 @@ class Vonigo {
      * Creates, reads, updates or deletes email records.
      *
      * @param array $params
-     * @param null $fields
+     * @param array $fields
      * @return bool|mixed|\stdClass
      */
-    public function emails($params = array(), $fields = null) {
+    public function emails($params = array(), $fields = array()) {
         return $this->data('emails', $params, $fields);
     }
 
@@ -432,10 +432,10 @@ class Vonigo {
      * Creates, reads, updates or deletes leads records.
      *
      * @param array $params
-     * @param null $fields
+     * @param array $fields
      * @return bool|mixed|\stdClass
      */
-    public function leads($params = array(), $fields = null) {
+    public function leads($params = array(), $fields = array()) {
         return $this->data('leads', $params, $fields);
     }
 
@@ -443,10 +443,10 @@ class Vonigo {
      * Creates, reads, updates or deletes location objects.
      *
      * @param $params
-     * @param null $fields
+     * @param array $fields
      * @return bool|mixed|\stdClass
      */
-    public function locations($params, $fields = null) {
+    public function locations($params, $fields = array()) {
         return $this->data('locations', $params, $fields);
     }
 
@@ -454,10 +454,10 @@ class Vonigo {
      * Creates, reads, updates or deletes workorder objects.
      *
      * @param $params
-     * @param null $fields
+     * @param array $fields
      * @return bool|mixed|\stdClass
      */
-    public function workorders($params = array(), $fields = null) {
+    public function workorders($params = array(), $fields = array()) {
         if (isset($params['objectID']) &! isset($params['method'])) {
             $params['method'] = 1;
         }
@@ -474,21 +474,21 @@ class Vonigo {
      * Creates, reads, updates or deletes charge objects.
      *
      * @param $params
-     * @param null $fields
+     * @param array $fields
      * @return bool|mixed|\stdClass
      */
-    public function charges($params) {
-        return $this->data('charges', $params);
+    public function charges($params, $fields = array()) {
+        return $this->data('charges', $params, $fields);
     }
 
     /**
      * Creates, reads, updates or deletes job objects.
      *
      * @param $params
-     * @param null $fields
+     * @param array $fields
      * @return bool|mixed|\stdClass
      */
-    public function jobs($params = array(), $fields = null) {
+    public function jobs($params = array(), $fields = array()) {
         return $this->data('jobs', $params, $fields);
     }
 
@@ -496,18 +496,18 @@ class Vonigo {
      * Creates, reads, updates or deletes invoice objects.
      *
      * @param $params
-     * @param null $fields
+     * @param array $fields
      * @return bool|mixed|\stdClass
      */
-    public function invoices($params) {
-        return $this->data('invoices', $params);
+    public function invoices($params, $fields = array()) {
+        return $this->data('invoices', $params, $fields);
     }
 
     /**
      * Creates, reads, updates or deletes payment objects.
      *
      * @param $params
-     * @param null $fields
+     * @param array $fields
      * @return bool|mixed|\stdClass
      */
     public function payments($params=array(), $fields=array()) {
@@ -521,22 +521,22 @@ class Vonigo {
      * Creates, reads, updates or deletes quote objects.
      *
      * @param $params
-     * @param null $fields
+     * @param array $fields
      * @return bool|mixed|\stdClass
      */
-    public function quotes($params) {
-        return $this->data('quotes', $params);
+    public function quotes($params, $fields = array()) {
+        return $this->data('quotes', $params, $fields);
     }
 
     /**
      * Creates, reads, updates or deletes case objects.
      *
      * @param $params
-     * @param null $fields
+     * @param array $fields
      * @return bool|mixed|\stdClass
      */
-    public function cases($params) {
-        return $this->data('cases', $params);
+    public function cases($params, $fields = array()) {
+        return $this->data('cases', $params, $fields);
     }
 
     /**

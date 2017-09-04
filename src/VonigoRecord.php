@@ -14,7 +14,7 @@ abstract class VonigoRecord {
 	 * @var string | bool| int
 	 * The value of this record's isActive property
 	 */
-	private $active;
+	protected $active;
 
 	/**
 	 * @var Vonigo
@@ -318,7 +318,6 @@ abstract class VonigoRecord {
 		}
 		else {
 			throw new \Exception('Could not set franchise (' . $this->franchiseID . '):' . PHP_EOL . 
-print_r($session, true));
 		}
 	}
 

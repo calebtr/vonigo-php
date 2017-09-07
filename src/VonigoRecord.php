@@ -317,7 +317,7 @@ abstract class VonigoRecord {
 			return $session;
 		}
 		else {
-			throw new \Exception('Could not set franchise (' . $this->franchiseID . '):' . PHP_EOL . 
+			throw new \Exception('Could not set franchise (' . $this->franchiseID . '):' . PHP_EOL );
 		}
 	}
 

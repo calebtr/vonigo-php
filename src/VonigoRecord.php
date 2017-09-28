@@ -217,7 +217,7 @@ abstract class VonigoRecord {
 
                 if (!empty($object->Options)) {
     			foreach ($object->Options as $option) {
-				if ($option->fieldID = $fieldID && $option->optionID == $optionID) {
+				if ($option->fieldID == $fieldID && $option->optionID == $optionID) {
 					return $option->name;
 				}
 			}

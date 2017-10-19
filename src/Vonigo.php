@@ -201,12 +201,7 @@ class Vonigo {
         if ($return->info['http_code'] != 200) {
             $decoded->httpCode = $return->info['http_code'];
         }
-        else {
-            // add URL to error messages
-            if ($decoded->errNo != 0) {
-                $decoded->errURL = $url;
-            }
-        }
+        $decoded->url = $url;
 
         $return->body = json_encode($decoded);
 
@@ -849,7 +844,7 @@ class Vonigo {
         $params = array('method' => 3, 'zip' => $zip);
         return $this->franchises($params);
     }
-    
+
     /**
      * Sets franchise.
      *

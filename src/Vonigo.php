@@ -623,6 +623,7 @@ class Vonigo {
         return $this->availability($params);
     }
 
+
     /**
      * Lists avialable times.
      *
@@ -834,10 +835,21 @@ class Vonigo {
      *
      * @return bool|mixed|\stdClass
      */
-    public function franchises() {
-        return $this->security('franchises');
+    public function franchises($params = null) {
+        return $this->security('franchises', $params);
     }
 
+    /**
+     * An alternative way of finding the franchise associated with a Zip/Postal code.
+     *
+     * @param $zip
+     * @return bool|mixed|\stdClass
+     */
+    public function getFranchiseByZip($zip) {
+        $params = array('method' => 3, 'zip' => $zip);
+        return $this->franchises($params);
+    }
+    
     /**
      * Sets franchise.
      *

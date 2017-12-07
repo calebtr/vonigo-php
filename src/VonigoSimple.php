@@ -117,9 +117,11 @@ class VonigoSimple extends Vonigo implements VonigoInterface {
     public function getServiceTypes() {
         $serviceTypes = $this->serviceTypes();
         $return = array();
-        foreach ($serviceTypes->ServiceTypes as $serviceType) {
-            if ($this->isTrue($serviceType->isActive)) {
-                $return[$serviceType->serviceTypeID] = $serviceType->serviceType;
+        if (!empty($serviceTypes->ServiceTypes)) {
+            foreach ($serviceTypes->ServiceTypes as $serviceType) {
+                if ($this->isTrue($serviceType->isActive)) {
+                    $return[$serviceType->serviceTypeID] = $serviceType->serviceType;
+                }
             }
         }
         return $return;

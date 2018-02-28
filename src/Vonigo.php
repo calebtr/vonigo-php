@@ -358,7 +358,7 @@ class Vonigo {
         if (!isset($params['method'])) {
             $params['method'] = 0;
         }
-        if (isset($fields)) {
+        if (!empty($fields)) {
             $params['Fields'] = $fields;
             $action = 'post';
         }

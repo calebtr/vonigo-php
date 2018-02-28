@@ -65,7 +65,7 @@ class Vonigo {
      *
      * TODO: deprecate the use of this value
      */
-    private $company = '';
+    protected $company = '';
 
     /**
      * @var int - debug setting
@@ -75,7 +75,7 @@ class Vonigo {
     /**
      * @var string - Vonigo password
      */
-    private $password = '';
+    protected $password = '';
 
     /**
      * @var string - security token
@@ -90,7 +90,7 @@ class Vonigo {
     /**
      * @var string Vonigo username.
      */
-    private $username = '';
+    protected $username = '';
 
     /**
      * Vonigo constructor.

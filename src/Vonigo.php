@@ -80,7 +80,7 @@ class Vonigo {
     /**
      * @var string - security token
      */
-    private $securityToken = '';
+    protected $securityToken = '';
 
     /**
      * @var string - string sent as user agent header in http requests
@@ -274,6 +274,7 @@ class Vonigo {
         if ($this->getSecurityToken()) {
             return TRUE;
         }
+
         $this->set_curl_handle();
         $params = array(
             'company' => $this->company,
@@ -362,6 +363,7 @@ class Vonigo {
             $params['Fields'] = $fields;
             $action = 'post';
         }
+
         $result = $this->{$action}('data/' . $method, $params);
         if (!empty($result->body)) {
             return json_decode($result->body);
@@ -443,6 +445,17 @@ class Vonigo {
      */
     public function locations($params, $fields = array()) {
         return $this->data('locations', $params, $fields);
+    }
+
+    /**
+     * Creates, reads, updates or deletes note objects.
+     *
+     * @param $params
+     * @param array $fields
+     * @return bool|mixed|\stdClass
+     */
+    public function notes($params, $fields = array()) {
+        return $this->data('notes', $params, $fields);
     }
 
     /**
@@ -768,10 +781,13 @@ class Vonigo {
                 'securityToken' => $this->getSecurityToken(),
             );
         }
+
         $result = $this->get('system/' . $method . '/', $params);
+
         if (!empty($result->body)) {
             return json_decode($result->body);
         }
+
     }
 
     /**

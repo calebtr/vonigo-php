@@ -95,6 +95,13 @@ class VonigoSimple extends Vonigo implements VonigoInterface {
     }
 
     /**
+     * @param $objectID
+     */
+    public function getNote($objectID) {
+        return $this->getRecordbyID('notes', $objectID);
+    }
+
+    /**
      * @param $quoteID
      */
     public function getQuote($quoteID) {
@@ -145,6 +152,5 @@ class VonigoSimple extends Vonigo implements VonigoInterface {
         );
         return call_user_func(array($this, $method), $params, $fields);
     }
-
 
 }

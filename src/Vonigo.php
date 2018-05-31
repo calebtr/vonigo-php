@@ -127,8 +127,8 @@ class Vonigo {
      */
     protected function set_curl_handle() {
         if (!$this->ch) {
-            $this->ch = curl_init();
-            curl_setopt($this->ch, CURLOPT_USERAGENT, $this->userAgent);
+            $this->ch = \curl_init();
+            \curl_setopt($this->ch, CURLOPT_USERAGENT, $this->userAgent);
         }
     }
 
@@ -155,11 +155,11 @@ class Vonigo {
         if ($this->debug & VONIGO_DEBUG) {
             $this->showDebug('url:' . $url);
         }
-        curl_setopt($this->ch, CURLOPT_URL, $url);
-        curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, 1);
+        \curl_setopt($this->ch, CURLOPT_URL, $url);
+        \curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, 1);
         $return = new \stdClass();
-        $return->body = curl_exec($this->ch);
-        $return->info = curl_getinfo($this->ch);
+        $return->body = \curl_exec($this->ch);
+        $return->info = \curl_getinfo($this->ch);
         if ($this->debug & VONIGO_DEBUG) {
             $return->rawbody = $return->body;
         }
@@ -223,9 +223,9 @@ class Vonigo {
         $auth = $this->authenticate();
         if ($auth === TRUE) {
             $params['securityToken'] = $this->getSecurityToken();
-            curl_setopt($this->ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-            curl_setopt($this->ch, CURLOPT_POST, 1);
-            curl_setopt($this->ch, CURLOPT_POSTFIELDS, json_encode($params));
+            \curl_setopt($this->ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+            \curl_setopt($this->ch, CURLOPT_POST, 1);
+            \curl_setopt($this->ch, CURLOPT_POSTFIELDS, json_encode($params));
             if ($this->debug & VONIGO_DEBUG) {
                 $this->showDebug('post-params: ' . print_r($params, true));
                 if (defined('JSON_PRETTY_PRINT')) {
@@ -254,9 +254,9 @@ class Vonigo {
         if ($auth === TRUE) {
             $params['securityToken'] = $this->getSecurityToken();
             // set options; remove post options
-            curl_setopt($this->ch, CURLOPT_HTTPHEADER, array('Content-Type: text/html'));
-            curl_setopt($this->ch, CURLOPT_POST, 0);
-            curl_setopt($this->ch, CURLOPT_HTTPGET, 1);
+            \curl_setopt($this->ch, CURLOPT_HTTPHEADER, array('Content-Type: text/html'));
+            \curl_setopt($this->ch, CURLOPT_POST, 0);
+            \curl_setopt($this->ch, CURLOPT_HTTPGET, 1);
             return $this->request($method, $params);
         }
         else {
@@ -313,7 +313,7 @@ class Vonigo {
         $this->set_curl_handle();
         $auth = $this->authenticate();
         if ($auth === true) {
-            curl_setopt($this->ch, CURLOPT_HTTPGET, 0);
+            \curl_setopt($this->ch, CURLOPT_HTTPGET, 0);
             $this->set_post_options($params);
             return $this->request($method);
         }
@@ -327,7 +327,7 @@ class Vonigo {
      * Closes cURL connections.
      */
     public function close() {
-        curl_close($this->ch);
+        \curl_close($this->ch);
     }
 
     /**
@@ -338,16 +338,20 @@ class Vonigo {
      *   - GET if there are no fields being requested or updated;
      *   - POST if there are fields being requested or updated.
      */
-    protected function data($method, $params = array(), $fields = NULL) {
+    protected function data($method, $params = array(), $fields = null, $charges = null) {
         $action = 'get';
+
         if (($method == 'charges' && $params['method'] == 2) || ($method == 'payments' && $params['method'] == 3)){
             $action = 'post';
         }
+
         $auth = $this->authenticate();
+
         if (!$auth) {
             $this->setSecurityToken(null);
             return $auth;
         }
+
         $token = $this->getSecurityToken();
         $params['securityToken'] = $token;
 
@@ -355,13 +359,20 @@ class Vonigo {
             $params['method'] = '1';
             $params['objectID'] = (string) $id;
         }
+
         if (!isset($params['method'])) {
             $params['method'] = 0;
         }
+
         if (isset($fields)) {
             $params['Fields'] = $fields;
             $action = 'post';
         }
+
+        if (isset($charges)) {
+            $params['Charges'] = $charges;
+        }
+
         $result = $this->{$action}('data/' . $method, $params);
         if (!empty($result->body)) {
             return json_decode($result->body);
@@ -519,8 +530,8 @@ class Vonigo {
      * @param array $fields
      * @return bool|mixed|\stdClass
      */
-    public function quotes($params, $fields = array()) {
-        return $this->data('quotes', $params, $fields);
+    public function quotes($params, $fields = array(), $charges = array()) {
+        return $this->data('quotes', $params, $fields, $charges);
     }
 
     /**

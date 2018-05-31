@@ -95,6 +95,13 @@ class VonigoSimple extends Vonigo implements VonigoInterface {
     }
 
     /**
+     * @param $objectID
+     */
+    public function getNote($objectID) {
+        return $this->getRecordbyID('notes', $objectID);
+    }
+
+    /**
      * @param $quoteID
      */
     public function getQuote($quoteID) {
@@ -117,9 +124,11 @@ class VonigoSimple extends Vonigo implements VonigoInterface {
     public function getServiceTypes() {
         $serviceTypes = $this->serviceTypes();
         $return = array();
-        foreach ($serviceTypes->ServiceTypes as $serviceType) {
-            if ($this->isTrue($serviceType->isActive)) {
-                $return[$serviceType->serviceTypeID] = $serviceType->serviceType;
+        if (!empty($serviceTypes->ServiceTypes)) {
+            foreach ($serviceTypes->ServiceTypes as $serviceType) {
+                if ($this->isTrue($serviceType->isActive)) {
+                    $return[$serviceType->serviceTypeID] = $serviceType->serviceType;
+                }
             }
         }
         return $return;
@@ -143,6 +152,5 @@ class VonigoSimple extends Vonigo implements VonigoInterface {
         );
         return call_user_func(array($this, $method), $params, $fields);
     }
-
 
 }

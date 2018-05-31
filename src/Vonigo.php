@@ -65,7 +65,7 @@ class Vonigo {
      *
      * TODO: deprecate the use of this value
      */
-    private $company = '';
+    protected $company = '';
 
     /**
      * @var int - debug setting
@@ -75,12 +75,12 @@ class Vonigo {
     /**
      * @var string - Vonigo password
      */
-    private $password = '';
+    protected $password = '';
 
     /**
      * @var string - security token
      */
-    private $securityToken = '';
+    protected $securityToken = '';
 
     /**
      * @var string - string sent as user agent header in http requests
@@ -90,7 +90,7 @@ class Vonigo {
     /**
      * @var string Vonigo username.
      */
-    private $username = '';
+    protected $username = '';
 
     /**
      * Vonigo constructor.
@@ -274,6 +274,7 @@ class Vonigo {
         if ($this->getSecurityToken()) {
             return TRUE;
         }
+
         $this->set_curl_handle();
         $params = array(
             'company' => $this->company,
@@ -364,12 +365,12 @@ class Vonigo {
             $params['method'] = 0;
         }
 
-        if (isset($fields)) {
+        if (!empty($fields)) {
             $params['Fields'] = $fields;
             $action = 'post';
         }
 
-        if (isset($charges)) {
+        if (!empty($charges)) {
             $params['Charges'] = $charges;
         }
 
@@ -454,6 +455,17 @@ class Vonigo {
      */
     public function locations($params, $fields = array()) {
         return $this->data('locations', $params, $fields);
+    }
+
+    /**
+     * Creates, reads, updates or deletes note objects.
+     *
+     * @param $params
+     * @param array $fields
+     * @return bool|mixed|\stdClass
+     */
+    public function notes($params, $fields = array()) {
+        return $this->data('notes', $params, $fields);
     }
 
     /**
@@ -779,10 +791,13 @@ class Vonigo {
                 'securityToken' => $this->getSecurityToken(),
             );
         }
+
         $result = $this->get('system/' . $method . '/', $params);
+
         if (!empty($result->body)) {
             return json_decode($result->body);
         }
+
     }
 
     /**

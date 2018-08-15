@@ -479,12 +479,6 @@ class Vonigo {
         if (isset($params['objectID']) &! isset($params['method'])) {
             $params['method'] = 1;
         }
-        if (isset($params['dateStart'])) {
-            $params['pageSize'] = 100;
-        }
-        if (isset($params['pageNo'])) {
-            $params['pageSize'] = 100;
-        }
         return $this->data('workorders', $params, $fields);
     }
 

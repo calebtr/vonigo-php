@@ -167,7 +167,7 @@ class Vonigo {
 
         if (is_null($decoded)) {
             $decoded = (object) array('errNo' => -400, 'errMsg' => 'invalid JSON response from server', 'body' => $return->body);
-            throw new \Exception(sprintf('Invalid JSON response from Vonigo from url %s: ' . PHP_EOL . ' %s', $url, $return->body));
+//            throw new \Exception(sprintf('Invalid JSON response from Vonigo from url %s: ' . PHP_EOL . ' %s', $url, $return->body));
             if ($this->debug & VONIGO_DEBUG) {
                 $this->showDebug('invalid response: ' . print_r($return->body, true));
             }

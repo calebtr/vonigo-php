@@ -45,7 +45,7 @@ define('VONIGO_OBJECT_ID_PRICEBLOCK', 69);
 define('VONIGO_OBJECT_ID_PRICEITEM', 70);
 define('VONIGO_OBJECT_ID_SIGNATURE', 71);
 define('VONIGO_OBJECT_ID_BOOKOFF', 74);
-define('VONIGO_OBJECT_ID_SERVICE TYPE', 78);
+define('VONIGO_OBJECT_ID_SERVICE_TYPE', 78);
 define('VONIGO_OBJECT_ID_WAYPOINT', 84);
 
 class Vonigo {
@@ -65,7 +65,7 @@ class Vonigo {
      *
      * TODO: deprecate the use of this value
      */
-    private $company = '';
+    protected $company = '';
 
     /**
      * @var int - debug setting
@@ -75,12 +75,12 @@ class Vonigo {
     /**
      * @var string - Vonigo password
      */
-    private $password = '';
+    protected $password = '';
 
     /**
      * @var string - security token
      */
-    private $securityToken = '';
+    protected $securityToken = '';
 
     /**
      * @var string - string sent as user agent header in http requests
@@ -90,7 +90,7 @@ class Vonigo {
     /**
      * @var string Vonigo username.
      */
-    private $username = '';
+    protected $username = '';
 
     /**
      * Vonigo constructor.
@@ -127,8 +127,8 @@ class Vonigo {
      */
     protected function set_curl_handle() {
         if (!$this->ch) {
-            $this->ch = curl_init();
-            curl_setopt($this->ch, CURLOPT_USERAGENT, $this->userAgent);
+            $this->ch = \curl_init();
+            \curl_setopt($this->ch, CURLOPT_USERAGENT, $this->userAgent);
         }
     }
 
@@ -155,11 +155,11 @@ class Vonigo {
         if ($this->debug & VONIGO_DEBUG) {
             $this->showDebug('url:' . $url);
         }
-        curl_setopt($this->ch, CURLOPT_URL, $url);
-        curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, 1);
+        \curl_setopt($this->ch, CURLOPT_URL, $url);
+        \curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, 1);
         $return = new \stdClass();
-        $return->body = curl_exec($this->ch);
-        $return->info = curl_getinfo($this->ch);
+        $return->body = \curl_exec($this->ch);
+        $return->info = \curl_getinfo($this->ch);
         if ($this->debug & VONIGO_DEBUG) {
             $return->rawbody = $return->body;
         }
@@ -201,12 +201,7 @@ class Vonigo {
         if ($return->info['http_code'] != 200) {
             $decoded->httpCode = $return->info['http_code'];
         }
-        else {
-            // add URL to error messages
-            if ($decoded->errNo != 0) {
-                $decoded->errURL = $url;
-            }
-        }
+        $decoded->url = $url;
 
         $return->body = json_encode($decoded);
 
@@ -228,9 +223,9 @@ class Vonigo {
         $auth = $this->authenticate();
         if ($auth === TRUE) {
             $params['securityToken'] = $this->getSecurityToken();
-            curl_setopt($this->ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-            curl_setopt($this->ch, CURLOPT_POST, 1);
-            curl_setopt($this->ch, CURLOPT_POSTFIELDS, json_encode($params));
+            \curl_setopt($this->ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+            \curl_setopt($this->ch, CURLOPT_POST, 1);
+            \curl_setopt($this->ch, CURLOPT_POSTFIELDS, json_encode($params));
             if ($this->debug & VONIGO_DEBUG) {
                 $this->showDebug('post-params: ' . print_r($params, true));
                 if (defined('JSON_PRETTY_PRINT')) {
@@ -259,9 +254,9 @@ class Vonigo {
         if ($auth === TRUE) {
             $params['securityToken'] = $this->getSecurityToken();
             // set options; remove post options
-            curl_setopt($this->ch, CURLOPT_HTTPHEADER, array('Content-Type: text/html'));
-            curl_setopt($this->ch, CURLOPT_POST, 0);
-            curl_setopt($this->ch, CURLOPT_HTTPGET, 1);
+            \curl_setopt($this->ch, CURLOPT_HTTPHEADER, array('Content-Type: text/html'));
+            \curl_setopt($this->ch, CURLOPT_POST, 0);
+            \curl_setopt($this->ch, CURLOPT_HTTPGET, 1);
             return $this->request($method, $params);
         }
         else {
@@ -279,6 +274,7 @@ class Vonigo {
         if ($this->getSecurityToken()) {
             return TRUE;
         }
+
         $this->set_curl_handle();
         $params = array(
             'company' => $this->company,
@@ -318,7 +314,7 @@ class Vonigo {
         $this->set_curl_handle();
         $auth = $this->authenticate();
         if ($auth === true) {
-            curl_setopt($this->ch, CURLOPT_HTTPGET, 0);
+            \curl_setopt($this->ch, CURLOPT_HTTPGET, 0);
             $this->set_post_options($params);
             return $this->request($method);
         }
@@ -332,7 +328,7 @@ class Vonigo {
      * Closes cURL connections.
      */
     public function close() {
-        curl_close($this->ch);
+        \curl_close($this->ch);
     }
 
     /**
@@ -343,16 +339,20 @@ class Vonigo {
      *   - GET if there are no fields being requested or updated;
      *   - POST if there are fields being requested or updated.
      */
-    protected function data($method, $params = array(), $fields = NULL) {
+    protected function data($method, $params = array(), $fields = null, $charges = null) {
         $action = 'get';
+
         if (($method == 'charges' && $params['method'] == 2) || ($method == 'payments' && $params['method'] == 3)){
             $action = 'post';
         }
+
         $auth = $this->authenticate();
+
         if (!$auth) {
             $this->setSecurityToken(null);
             return $auth;
         }
+
         $token = $this->getSecurityToken();
         $params['securityToken'] = $token;
 
@@ -360,13 +360,20 @@ class Vonigo {
             $params['method'] = '1';
             $params['objectID'] = (string) $id;
         }
+
         if (!isset($params['method'])) {
             $params['method'] = 0;
         }
-        if (isset($fields)) {
+
+        if (!empty($fields)) {
             $params['Fields'] = $fields;
             $action = 'post';
         }
+
+        if (!empty($charges)) {
+            $params['Charges'] = $charges;
+        }
+
         $result = $this->{$action}('data/' . $method, $params);
         if (!empty($result->body)) {
             return json_decode($result->body);
@@ -451,6 +458,17 @@ class Vonigo {
     }
 
     /**
+     * Creates, reads, updates or deletes note objects.
+     *
+     * @param $params
+     * @param array $fields
+     * @return bool|mixed|\stdClass
+     */
+    public function notes($params, $fields = array()) {
+        return $this->data('notes', $params, $fields);
+    }
+
+    /**
      * Creates, reads, updates or deletes workorder objects.
      *
      * @param $params
@@ -460,12 +478,6 @@ class Vonigo {
     public function workorders($params = array(), $fields = array()) {
         if (isset($params['objectID']) &! isset($params['method'])) {
             $params['method'] = 1;
-        }
-        if (isset($params['dateStart'])) {
-            $params['pageSize'] = 100;
-        }
-        if (isset($params['pageNo'])) {
-            $params['pageSize'] = 100;
         }
         return $this->data('workorders', $params, $fields);
     }
@@ -524,8 +536,8 @@ class Vonigo {
      * @param array $fields
      * @return bool|mixed|\stdClass
      */
-    public function quotes($params, $fields = array()) {
-        return $this->data('quotes', $params, $fields);
+    public function quotes($params, $fields = array(), $charges = array()) {
+        return $this->data('quotes', $params, $fields, $charges);
     }
 
     /**
@@ -622,6 +634,7 @@ class Vonigo {
         );
         return $this->availability($params);
     }
+
 
     /**
      * Lists avialable times.
@@ -772,10 +785,13 @@ class Vonigo {
                 'securityToken' => $this->getSecurityToken(),
             );
         }
+
         $result = $this->get('system/' . $method . '/', $params);
+
         if (!empty($result->body)) {
             return json_decode($result->body);
         }
+
     }
 
     /**
@@ -834,8 +850,19 @@ class Vonigo {
      *
      * @return bool|mixed|\stdClass
      */
-    public function franchises() {
-        return $this->security('franchises');
+    public function franchises($params = null) {
+        return $this->security('franchises', $params);
+    }
+
+    /**
+     * An alternative way of finding the franchise associated with a Zip/Postal code.
+     *
+     * @param $zip
+     * @return bool|mixed|\stdClass
+     */
+    public function getFranchiseByZip($zip) {
+        $params = array('method' => 3, 'zip' => $zip);
+        return $this->franchises($params);
     }
 
     /**
